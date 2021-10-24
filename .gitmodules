@@ -1,0 +1,3 @@
+[submodule "TPM2137"]
+	path = TPM2137
+	url = https://github.com/mattvenn/TPM2137
