@@ -1,0 +1,46 @@
+--- 
+# information
+project: 
+  title: "TPM2173"
+  description: "CTF by Q3K - turn on the green light by sending the right code"
+  picture: docs/
+  author: "Q3K & Matt Venn"
+  license: LICENSE
+
+interfaces: ['gpio']
+
+# test within caravel
+caravel_test:
+  recipe: "coco_test"
+  directory: "caravel_tpm2137"
+  id: 3
+  module_name: "wrapped_tpm2137"
+  instance_name: "wrapped_tpm2137"
+
+# module test
+module_test:
+  recipe: "test_tpm2137" 
+  directory: "TPM2137/generate"
+  makefile: "Makefile"
+
+# run the wrapper formal proof
+wrapper_proof:
+  directory: "."
+  sby: "properties.sby"
+
+# openlane config, used in case I need to re-harden
+openlane:
+  config: "config.tcl"
+
+# source required for various configs and module instantiation
+source:
+    - wrapper.v
+    - TPM2137/generate/challenge.v
+
+# gds - check size = 300x300, nothing on metal 5, do a DRC, check 141 tristate buffers, check LVS
+gds:
+  directory: "gds"
+  gds_filename: "wrapped_tpm2137.gds"
+  lvs_filename: "wrapped_tpm2137.lvs.powered.v"
+  lef_filename: "wrapped_tpm2137.lef"
+

@@ -1,0 +1,14 @@
+[options]
+mode prove
+
+[engines]
+smtbmc
+
+[script]
+read -formal wrapper.v challenge.v
+prep -top wrapped_tpm2137
+
+[files]
+wrapper.v
+properties.v
+TPM2137/generate/challenge.v
