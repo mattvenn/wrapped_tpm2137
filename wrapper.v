@@ -107,10 +107,10 @@ module wrapped_tpm2137 (
 
     // instantiate your module here, connecting what you need of the above signals
     challenge challenge(
+        .clk_10     (wb_clk_i),
         .uart       (io_in[8]),
-        .clk_10     (io_in[9]),
-        .led_green  (buf_io_out[10]),
-        .led_red    (buf_io_out[11])
+        .led_green  (buf_io_out[9]),
+        .led_red    (buf_io_out[10])
     );
 
 endmodule 
