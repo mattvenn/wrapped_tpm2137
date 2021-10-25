@@ -15,20 +15,25 @@ async def test(dut):
     dut.power3.value = 0;
     dut.power4.value = 0;
 
-    await ClockCycles(dut.clk, 8)
+    # had to decrease these as I decreased the clock frequency.
+    # got very weird power domain failure messages left as they were.
+    await ClockCycles(dut.clk, 2)
     dut.power1.value = 1;
-    await ClockCycles(dut.clk, 8)
+    await ClockCycles(dut.clk, 2)
     dut.power2.value = 1;
-    await ClockCycles(dut.clk, 8)
+    await ClockCycles(dut.clk, 2)
     dut.power3.value = 1;
-    await ClockCycles(dut.clk, 8)
+    await ClockCycles(dut.clk, 2)
     dut.power4.value = 1;
 
     await ClockCycles(dut.clk, 80)
     dut.RSTB.value = 1
 
     # wait for the project to become active
-    await RisingEdge(dut.uut.mprj.wrapped_tpm2137_3.active)
+    await with_timeout(RisingEdge(dut.uut.mprj.wrapped_tpm2137_3.active), 4*180, 'us')
+
+    # wait for the project to reset
+    await ClockCycles(dut.clk, 20)
 
     # check it's closed, leds are active low
     assert dut.led_green == 1
@@ -40,7 +45,7 @@ async def test(dut):
     await uart_source.wait()
 
     # wait another few clock cycles
-    await ClockCycles(dut.clk_10, 30)
+    await ClockCycles(dut.clk, 30)
 
     # check it's open
     assert dut.led_green == 0
