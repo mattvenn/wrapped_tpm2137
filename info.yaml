@@ -3,7 +3,7 @@
 project: 
   title: "TPM2137"
   description: "CTF by Q3K - turn on the green light by sending the right code"
-  picture: docs/
+  picture: docs/tpm2137.png
   author: "Q3K & Matt Venn"
   license: LICENSE
 
